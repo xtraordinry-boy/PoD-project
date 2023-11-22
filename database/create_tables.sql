@@ -1,1 +1,37 @@
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE stores (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  owner_id INTEGER NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NULL,
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+CREATE TABLE designs (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  user_id INTEGER NOT NULL,
+  store_id INTEGER NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NULL,
+  image VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (store_id) REFERENCES stores(id)
+);
+
+CREATE TABLE orders (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  user_id INTEGER NOT NULL,
+  design_id INTEGER NOT NULL,
+  product_type VARCHAR(255) NOT NULL,
+  status VARCHAR(255) NOT NULL,
+  order_date DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (design_id) REFERENCES designs(id)
+);
 
